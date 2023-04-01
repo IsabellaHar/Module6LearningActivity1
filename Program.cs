@@ -4,10 +4,10 @@
     {
         static void Main(string[] args)
         {
-            BankAccount myBankAccount = new BankAccount(1234567890, "Isabella", 100.00);
+            BankAccount myBankAccount = new BankAccount(1234567890, "Isabella", 100);
             Console.WriteLine(myBankAccount.Owner + ", your bank account has a balance of " + myBankAccount.Balance);
-            myBankAccount.MakeDeposit(100);
-            myBankAccount.MakeWithdrawal(-50);
+            myBankAccount.MakeDeposit(100, DateTime.Now, "Made a deposit");
+            myBankAccount.MakeWithdrawal(-50, DateTime.Now, "Made a withdrawal");
             Console.WriteLine(myBankAccount.Owner + ", your bank account has a balance of " + myBankAccount.Balance);
         }
     }
@@ -17,7 +17,7 @@
         public int AccountNumber { get; }    //property for the account number
         public string Owner { get; set; }   //property for the owner
 
-        public decimal Balance { get; }        //property for the balance 
+        public decimal Balance { get; set; }        //property for the balance 
 
         public BankAccount(int accountNumber, string owner, decimal initialBalance)    //The class constructor
         {
@@ -50,17 +50,17 @@
 
         public void MakeWithdrawal(decimal amount, DateTime date, string note)
         {
-            if (withdrawal > 0)      //if the amount of the withdrawn is positive, write an error message.
+            if (amount > 0)      //if the amount of the withdrawn is positive, write an error message.
             {
                 Console.WriteLine("Error: withdrawals must be negative");
             } else
             {
-                if ((Balance + withdrawal) < 0)    //if the withdrawal will overdraw the account, write an error message.
+                if ((Balance + amount) < 0)    //if the withdrawal will overdraw the account, write an error message.
                 {
                     Console.WriteLine("Error: you cannot withdraw more than the balance");
                 } else
                 {
-                    Balance = Balance + withdrawal;   //if the withdrawal is all OK, deduct it from the balance.
+                    Balance = Balance + amount;   //if the withdrawal is all OK, deduct it from the balance.
                 }
             }
         }
